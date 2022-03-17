@@ -10,6 +10,10 @@ function addTask() {
   tasks.value.push(task);
   newTask.value = "";
 }
+
+function removeTask(task) {
+  tasks.value = tasks.value.filter((t) => t !== task);
+}
 </script>
 
 <template>
@@ -25,7 +29,7 @@ function addTask() {
     <li v-for="task in tasks" :key="task.id">
       <input type="checkbox" :id="task.id" v-model="task.done" />
       <label :for="task.id">{{ task.text }}</label>
-      <button class="remove-btn">X</button>
+      <button class="remove-btn" @click="removeTask(task)">X</button>
     </li>
   </ul>
   <p v-else>No tasks added yet.</p>
