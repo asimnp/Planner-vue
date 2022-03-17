@@ -1,16 +1,26 @@
 <script setup>
 import { ref } from "vue";
+import { v4 as uuidv4 } from "uuid";
 
-const tasks = ref([
-  { id: 1, text: "Read book", done: true },
-  { id: 2, text: "Complete homework", done: false },
-  { id: 3, text: "Plane day", done: true },
-]);
+const newTask = ref("");
+const tasks = ref([]);
+
+function addTask() {
+  const task = { id: uuidv4(), text: newTask.value, done: false };
+  tasks.value.push(task);
+  newTask.value = "";
+}
 </script>
 
 <template>
   <h1>Planner!</h1>
   <h3>Tasks</h3>
+
+  <form @submit.prevent="addTask">
+    <input type="text" v-model="newTask" />
+    <button type="submit">Add Task</button>
+  </form>
+
   <ul v-if="tasks.length">
     <li v-for="task in tasks" :key="task.id">
       <input type="checkbox" :id="task.id" v-model="task.done" />
